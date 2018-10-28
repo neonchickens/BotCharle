@@ -12,12 +12,25 @@ public abstract class Command implements Runnable {
 	protected User msgAuthor;
 	protected Guild msgGuild;
 	protected MessageChannel msgMessageChannel;
+	protected Message msgMessage;
 	protected String[] strCommand;
 	
-	public Command(MessageReceivedEvent eventMessage) {
+	public Command(MessageReceivedEvent eventMessage, String[] strCommand) {
 		msgAuthor = eventMessage.getAuthor();
 		msgGuild = eventMessage.getGuild();
 		msgMessageChannel = eventMessage.getChannel();
-		strCommand = eventMessage.getMessage().getContentRaw().substring(1).split(" ");
+		msgMessage = eventMessage.getMessage();
+		this.strCommand = strCommand;
+	}
+	
+	protected String combineCommand() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < strCommand.length; i++) {
+			sb.append(strCommand[i]);
+			if (i + 1 < strCommand.length) {
+				sb.append(" ");
+			}
+		}
+		return sb.toString();
 	}
 }

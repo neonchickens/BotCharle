@@ -8,8 +8,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class help extends Command {
 
-	public help(MessageReceivedEvent eventMessage) {
-		super(eventMessage);
+	public help(MessageReceivedEvent eventMessage, String[] strCommand) {
+		super(eventMessage, strCommand);
 	}
 
 	@Override

@@ -11,8 +11,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class commands extends Command {
 
-	public commands(MessageReceivedEvent eventMessage) {
-		super(eventMessage);
+	public commands(MessageReceivedEvent eventMessage, String[] strCommand) {
+		super(eventMessage, strCommand);
 	}
 
 	@Override

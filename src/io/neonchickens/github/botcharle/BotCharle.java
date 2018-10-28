@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,8 +33,8 @@ public class BotCharle extends ListenerAdapter {
 		if (!eventMessage.getAuthor().isBot() && eventMessage.getMessage().getContentRaw().charAt(0) == '!') {
 			try {
 				//Call the command/file by name
-				Constructor cmd = Class.forName("io.neonchickens.github.botcharle.commands." + eventMessage.getMessage().getContentRaw().substring(1).split(" ")[0]).getConstructor(MessageReceivedEvent.class);
-				Command c = (Command)cmd.newInstance(eventMessage);
+				Constructor cmd = Class.forName("io.neonchickens.github.botcharle.commands." + eventMessage.getMessage().getContentRaw().substring(1).split(" ")[0]).getConstructor(MessageReceivedEvent.class, String[].class);
+				Command c = (Command)cmd.newInstance(eventMessage, eventMessage.getMessage().getContentRaw().substring(1).split(" "));
 				cmdPool.execute(c);
 			} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
@@ -42,5 +43,19 @@ public class BotCharle extends ListenerAdapter {
 			
 		}
 		
+		List<String[]> lstCommands = AutoExecMessage.getCommands(eventMessage.getGuild().getId());
+		if (lstCommands != null) {
+			for (String[] strArgs: lstCommands) {
+				try {
+					//Call the command/file by name
+					Constructor cmd = Class.forName("io.neonchickens.github.botcharle.commands." + strArgs[0]).getConstructor(MessageReceivedEvent.class, String[].class);
+					Command c = (Command)cmd.newInstance(eventMessage, strArgs);
+					cmdPool.execute(c);
+				} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
