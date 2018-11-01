@@ -12,6 +12,9 @@ public class emote extends Command {
 	public emote(MessageReceivedEvent eventMessage, String[] strCommand) {
 		super(eventMessage, strCommand);
 		lstEmojis = new ArrayList<String>();
+		if (strCommand[1].startsWith("-")) {
+			
+		}
 		lstEmojis.add(strCommand[1]);
 	}
 

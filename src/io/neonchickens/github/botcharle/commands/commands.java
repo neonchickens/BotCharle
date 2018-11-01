@@ -1,9 +1,6 @@
 package io.neonchickens.github.botcharle.commands;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import io.neonchickens.github.botcharle.Command;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.Message;
